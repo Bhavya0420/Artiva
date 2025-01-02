@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Wishlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #22a394;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            font-family: 'Lobster',cursive;
+        }
+
+        .header svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+            cursor: pointer;
+        }
+
+        .header .cart-link {
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5rem;
+            color: #22a394;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #wishlistItems {
+            margin: 20px auto;
+            padding: 15px;
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .wishlist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .wishlist-item:hover {
+            transform: scale(1.05);
+        }
+
+        .wishlist-item img {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .wishlist-item div {
+            flex-grow: 1;
+        }
+
+        .wishlist-item h4 {
+            font-size: 1.4rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .wishlist-item p {
+            margin: 5px 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .remove-item {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .remove-item:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        .empty-wishlist-message {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<div class="header">
+    <a href="../HomePage.html" class="logo">
+        <img src="../photos/logo.png" alt="Artiva Logo">
+        <span class="title">Artiva</span>
+    </a>
+    <a href="cart.html" class="cart-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M7 18c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm2.35-9.84A1.006 1.006 0 0 0 18.5 8H6.438l-.67-3.33A1 1 0 0 0 4.784 4H2v2h2.055l1.91 9.55c.096.48.517.83 1.015.83H17v-2H7.699c-.093 0-.178-.062-.205-.152l-.005-.021L7 14h10.5c.397 0 .756-.237.909-.6l2.448-5.398a.999.999 0 0 0-.506-1.34z"/>
+        </svg>
+    </a>
+</div>
+
+<!-- Main Content -->
+<h1>Your Wishlist</h1>
+
+<section id="wishlistItems">
+    <!-- Wishlist items will be dynamically added here -->
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const wishlistItemsContainer = document.getElementById('wishlistItems');
+
+        // Retrieve the wishlist from localStorage, or initialize as an empty array
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        console.log("Retrieved wishlist from localStorage:", wishlist); // Debug log
+
+        // Clear previous content in the wishlist container
+        wishlistItemsContainer.innerHTML = '';
+
+        if (wishlist.length === 0) {
+            wishlistItemsContainer.innerHTML = `<p class="empty-wishlist-message">Your wishlist is empty. Add some items!</p>`;
+        } else {
+            wishlist.forEach(item => {
+                // Ensure item has all required fields
+                if (item.id && item.name && item.price && item.image) {
+                    const wishlistItemDiv = document.createElement('div');
+                    wishlistItemDiv.classList.add('wishlist-item');
+                    wishlistItemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" width="80">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p>Price: ₹${item.price}</p>
+                        </div>
+                        <button class="remove-item" data-product-id="${item.id}">Remove</button>
+                    `;
+
+                    wishlistItemDiv.querySelector('.remove-item').addEventListener('click', (e) => {
+                        const productId = e.target.dataset.productId;
+                        // Filter out the item with the clicked productId
+                        wishlist = wishlist.filter(item => item.id !== productId);
+                        localStorage.setItem('wishlist', JSON.stringify(wishlist)); // Save updated wishlist
+                        location.reload(); // Refresh the page to reflect changes
+                    });
+
+                    wishlistItemsContainer.appendChild(wishlistItemDiv);
+                } else {
+                    console.warn("Invalid wishlist item structure:", item);
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

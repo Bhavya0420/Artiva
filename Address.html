@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Shipping Address</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #22a394;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            font-family: 'Lobster',cursive;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5rem;
+            color: #21a395;
+        }
+
+        .address-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .address-section {
+            margin-top: 30px;
+        }
+
+        .address-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .address-section input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .btn-confirm {
+            background-color: #21a395;
+            color: white;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+
+        .btn-confirm:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../HomePage.html" class="logo">
+            <img src="../photos/logo.png" alt="Artiva Logo">
+            <span class="title">Artiva</span>
+        </a>
+    </div>
+
+<h1>Enter Shipping Address</h1>
+
+<div class="address-container">
+    <form action="Address.php" method="POST">
+        <div class="address-section">
+            <label for="name">Full Name:</label>
+            <input type="text" name="name" id="name" required placeholder="Enter your full name">
+
+            <label for="email">Email Address:</label>
+            <input type="email" name="email" id="email" required placeholder="Enter your email address">
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" name="phone" id="phone" required placeholder="Enter your phone number">
+
+            <label for="address">Street Address:</label>
+            <input type="text" name="address" id="address" required placeholder="Enter your street address">
+
+            <label for="city">City:</label>
+            <input type="text" name="city" id="city" required placeholder="Enter your city">
+
+            <label for="state">State:</label>
+            <input type="text" name="state" id="state" required placeholder="Enter your state">
+
+            <label for="zip">Zip Code:</label>
+            <input type="text" name="zip" id="zip" required placeholder="Enter your zip code">
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn-confirm">Submit Address</button>
+    </form>
+</div>
+
+</body>
+</html>
