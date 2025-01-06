@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .header {
+      background-color: #21867a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .header img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .header .title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .header .earnings {
+      font-size: 16px;
+    }
+
+    .content {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .content h1 {
+      color: #21867a;
+      font-size: 24px;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      overflow: hidden;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-card .details {
+      padding: 15px;
+      text-align: left;
+    }
+
+    .product-card .details h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .product-card .details p {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .product-card .details .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #21867a;
+    }
+
+    .remove-btn {
+      display: block;
+      margin: 15px auto 10px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .remove-btn:hover {
+      background-color: darkred;
+    }
+
+    .button-container {
+      margin-top: 30px;
+    }
+
+    .button-container button {
+      background-color: #21867a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-container button:hover {
+      background-color: #1b6d61;
+    }
+
+    .upload-container {
+      width: 80%;
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .upload-container h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .upload-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .upload-container label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .upload-container input, .upload-container textarea {
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .upload-container textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .upload-container .button-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .upload-container .upload-btn, .upload-container .back-btn {
+      padding: 10px 20px;
+      background-color: #21867a;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .upload-container .upload-btn:hover, .upload-container .back-btn:hover {
+      background-color: #1a6e64;
+    }
+
+    #status-message {
+      text-align: center;
+      font-size: 18px;
+      color: #21867a;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <a href="../HomePage.html" style="display: flex; align-items: center; text-decoration: none; color: white;">
+        <img src="../photos/logo.png" alt="Logo">
+        <span class="title">Artiva</span>
+      </a>
+    </div>
+    <a href="earnings.html" class="earnings" style="color: white; text-decoration: none;">Your earnings</a>
+  </div>
+  
+  <div class="content" id="main-content">
+    <h1>Your Products</h1>
+    <ul class="product-list" id="product-list">
+      <p id="no-products" style="display: block;">No products yet</p>
+    </ul>
+    <div class="button-container">
+      <button id="uploadProductBtn">Post Your Product</button>
+    </div>
+  </div>
+
+  <div class="upload-container" id="upload-container">
+    <h2>Upload Your Product</h2>
+    <form action="seller.php" method="POST" enctype="multipart/form-data">
+      <label for="product-name">Product Name:</label>
+      <input type="text" id="product-name" name="product-name" required>
+    
+      <label for="product-description">Product Description:</label>
+      <textarea id="product-description" name="product-description" required></textarea>
+    
+      <label for="product-price">Product Price (₹):</label>
+      <input type="number" id="product-price" name="product-price" step="0.01" required>
+    
+      <label for="product-image">Product Image:</label>
+      <input type="file" id="product-image" name="product-image" accept="image/*" required>
+    
+      <div class="button-row">
+          <button type="button" class="back-btn" id="goBackBtn">Go Back</button>
+          <button type="submit" class="upload-btn">Upload Your Product</button>
+      </div>
+  </form>
+  
+    <p id="status-message"></p>
+  </div>
+
+  <script>
+    // Show upload form when button is clicked
+    document.getElementById('uploadProductBtn').addEventListener('click', function () {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('upload-container').style.display = 'block';
+    });
+
+    // Hide upload form when "Go Back" is clicked
+    document.getElementById('goBackBtn').addEventListener('click', function () {
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('upload-container').style.display = 'none';
+    });
+
+    // Handle form submission for product upload
+    document.getElementById('product-upload-form').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent form submission to the server
+
+      const productName = document.getElementById('product-name').value.trim();
+      const productDescription = document.getElementById('product-description').value.trim();
+      const productPrice = document.getElementById('product-price').value.trim();
+      const productImage = document.getElementById('product-image').files[0];
+
+      // Check if all fields are filled
+      if (!productName || !productDescription || !productPrice || !productImage) {
+        alert("Please fill in all fields and upload an image.");
+        return;
+      }
+
+      // Hide "No products" message if visible
+      const noProducts = document.getElementById('no-products');
+      if (noProducts) noProducts.style.display = 'none';
+
+      const productList = document.getElementById('product-list');
+      const productCard = document.createElement('li');
+      productCard.classList.add('product-card');
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        productCard.innerHTML = `
+          <img src="${event.target.result}" alt="${productName}">
+          <div class="details">
+            <h3>${productName}</h3>
+            <p>${productDescription}</p>
+            <p class="price">Price: ₹${productPrice}</p>
+            <button class="remove-btn">Remove</button>
+          </div>
+        `;
+
+        // Append the product card to the list
+        productList.appendChild(productCard);
+
+        // Add remove functionality to the product card
+        productCard.querySelector('.remove-btn').addEventListener('click', function () {
+          productCard.remove();
+          // Show "No products" message if the list is empty
+          if (productList.childElementCount === 0) {
+            noProducts.style.display = 'block';
+          }
+        });
+      };
+
+      reader.onerror = function () {
+        alert("Error loading the image. Please try again.");
+      };
+
+      // Read the image file
+      reader.readAsDataURL(productImage);
+
+      // Reset the form and display success message
+      document.getElementById('product-upload-form').reset();
+      document.getElementById('status-message').innerText = 'Your product has been uploaded successfully!';
+
+      // Hide upload form and return to main content after 2 seconds
+      setTimeout(() => {
+        document.getElementById('status-message').innerText = '';
+        document.getElementById('main-content').style.display = 'block';
+        document.getElementById('upload-container').style.display = 'none';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

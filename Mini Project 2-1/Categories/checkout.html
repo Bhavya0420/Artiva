@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #22a394;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            font-family: 'Lobster',cursive;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5rem;
+            color: #21a395;
+        }
+
+        .checkout-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-items {
+            margin-bottom: 30px;
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .checkout-item img {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .checkout-item div {
+            flex-grow: 1;
+        }
+
+        .checkout-item h4 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .checkout-item p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 1.8rem;
+            margin-top: 20px;
+        }
+
+        .btn-confirm {
+            background-color: #21a395;
+            color: white;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+
+        .btn-confirm:hover {
+            background-color: #21a395;
+        }
+
+        .empty-message {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #e74c3c;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../HomePage.html" class="logo">
+            <img src="../photos/logo.png" alt="Artiva Logo">
+            <span class="title">Artiva</span>
+        </a>
+    </div>
+
+<h1>Checkout</h1>
+
+<div class="checkout-container">
+    <form action="checkout.php" method="POST" id="checkoutForm">
+        <div class="checkout-items" id="checkoutItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+
+        <div class="total">
+            <p>Total: ₹<span id="totalPrice">0</span></p>
+        </div>
+
+        <!-- Hidden input to store cart data -->
+        <input type="hidden" name="cartData" id="cartData">
+        
+        <!-- Submit button for order confirmation -->
+        <button type="submit" class="btn-confirm">Confirm Order</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkoutItemsContainer = document.getElementById('checkoutItems');
+        const totalPriceElement = document.getElementById('totalPrice');
+        const checkoutForm = document.getElementById('checkoutForm');
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalPrice = 0;
+
+        checkoutItemsContainer.innerHTML = '';
+
+        if (cart.length === 0) {
+            checkoutItemsContainer.innerHTML = `<p class="empty-message">Your cart is empty. Add some items to proceed with checkout!</p>`;
+        } else {
+            cart.forEach(item => {
+                let price = parseFloat(item.price);
+                let quantity = parseInt(item.quantity);
+
+                if (isNaN(price) || price <= 0) price = 0;
+                if (isNaN(quantity) || quantity <= 0) quantity = 1;
+
+                totalPrice += price * quantity;
+
+                const checkoutItemDiv = document.createElement('div');
+                checkoutItemDiv.classList.add('checkout-item');
+                checkoutItemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" width="80">
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p>Price: ₹${price} x ${quantity}</p>
+                        <p>Subtotal: ₹${price * quantity}</p>
+                    </div>
+                `;
+
+                checkoutItemsContainer.appendChild(checkoutItemDiv);
+            });
+        }
+
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+
+        // Add event listener to handle order submission
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent form from submitting the default way
+
+            if (cart.length > 0) {
+                const cartData = {
+                    products: cart,
+                    totalPrice: totalPrice,
+                    orderDate: new Date().toISOString()
+                };
+
+                // Send data to the server using fetch
+                fetch('checkout.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cartData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Order confirmed!');
+                        // Reset the cart in localStorage after the order is placed
+                        localStorage.removeItem('cart');
+                        // Redirect to homepage after successful order
+                        window.location.href = '../HomePageLogin.php';  // Replace with your homepage URL
+                    } else {
+                        alert('Order failed: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Error occurred while processing the order: ' + error.message);
+                });
+            } else {
+                alert('Your cart is empty!');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

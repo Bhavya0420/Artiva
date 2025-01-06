@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-step Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #2a9d8f;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-left .logo-img {
+      height: 40px;
+    }
+
+    .header-left .navbar-brand {
+      font-size: 1.8rem;
+      text-decoration: none;
+      color: white;
+      font-family: 'Lobster', cursive;
+    }
+
+    .header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      min-height: 950px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .circle.active {
+      background-color: #21867a;
+    }
+
+    .line {
+      flex: 1;
+      height: 4px;
+      background-color: #e0e0e0;
+      margin: 0 10px;
+    }
+
+    .line.active {
+      background-color: #21867a;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      color: #21867a;
+      margin-bottom: 20px;
+    }
+
+    .form-step {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      font-size: 1.4em;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+
+    .form-group input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="file"],
+    .form-group input[type="password"] {
+      width: 98%;
+      padding: 12px;
+      font-size: 0.9em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+      position: absolute;
+      bottom: 30px;
+      width: calc(100% - 60px);
+    }
+
+    .buttons button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.4em;
+      cursor: pointer;
+    }
+
+    .buttons .back-btn {
+      background-color: #21867a;
+      color: white;
+    }
+
+    .buttons .back-btn:hover {
+      opacity: 0.9;
+    }
+
+    .buttons .continue-btn {
+      background-color: #21867a;
+      color: white;
+    }
+
+    .buttons .continue-btn:hover {
+      opacity: 0.9;
+    }
+
+    .buttons .submit-btn {
+      background-color: #21867a;
+      color: white;
+    }
+
+    .buttons .submit-btn:hover {
+      opacity: 0.9;
+    }
+    /* Custom Checkbox Wrapper */
+.custom-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+/* Custom Circle for Radio */
+.custom-checkbox-wrapper .custom-circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #21867a;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 10px;
+  position: relative;
+}
+
+/* Hide default radio button */
+.custom-checkbox-wrapper input[type="radio"] {
+  display: none;
+}
+
+/* Checked state styling */
+.custom-checkbox-wrapper input[type="radio"]:checked + label .custom-circle {
+  background-color: #21867a;
+  border-color: #21867a;
+}
+
+/* Label Text Styling */
+.custom-checkbox-wrapper label {
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+
+
+  </style>
+</head>
+<body>
+  <form action = "registration.php" method="POST">
+  <header>
+    <div class="header-left">
+        <a href="../HomePage.html">
+            <img src="../photos/logo.png" alt="Website Logo" class="logo-img">
+        </a>
+        <a class="navbar-brand" href="../HomePage.html">Artiva</a>
+    </div>
+    <div class="header-title">
+        Registration Form
+    </div>
+  </header>
+  <div class="container">
+    <div class="stepper">
+      <div class="step">
+        <div class="circle active" id="stepCircle1">1</div>
+      </div>
+      <div class="line active" id="stepLine1"></div>
+      <div class="step">
+        <div class="circle" id="stepCircle2">2</div>
+      </div>
+      <div class="line" id="stepLine2"></div>
+      <div class="step">
+        <div class="circle" id="stepCircle3">3</div>
+      </div>
+      <div class="line" id="stepLine3"></div>
+      <div class="step">
+        <div class="circle" id="stepCircle4">4</div>
+      </div>
+    </div>
+    
+    <!-- Step 1: Personal Details -->
+    <div class="form-step active" id="step1">
+      <h1>Personal Details</h1>
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name = "fullName" placeholder="Enter your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name = "email" placeholder="Enter your email address" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name ="address" placeholder="Enter your address" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name ="username" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password"  name = "password" placeholder="Enter your Password" required>
+        <small id="passwordHelp" style="color: gray; font-size: 0.8em;">
+          Password must be at least 8 characters long, include an uppercase letter, a number, and a special character.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="confirmpassword">Confirm Password</label>
+        <input type="password" id="confirmpassword" name = "confirmpassword" placeholder="Confirm your Password" required>
+        <small id="confirmPasswordError" style="color: red; font-size: 0.8em; display: none;">
+          Passwords do not match.
+        </small>
+      </div>
+    </div>
+
+    <div class="form-step" id="step2">
+        <h1>Tax Details</h1>
+        <div class="form-group">
+            <label>Choose your tax option:</label>
+          <!-- Option 1 -->
+<div class="custom-checkbox-wrapper">
+  <input 
+    type="radio" 
+    name="taxOption" 
+    id="gstinOption" 
+    value="GSTIN" 
+    required 
+    data-input-id="gstinInput"
+  >
+  <label for="gstinOption">
+    <span class="custom-circle"></span>
+    GSTIN number (Sell anywhere across India)
+  </label>
+</div>
+
+<div id="gstinInput" class="tax-input" style="display: none;">
+  <label for="gstinNumber">Enter GSTIN Number:</label>
+  <input type="text" id="gstinNumber" name="gstinNumber" placeholder="Enter your GSTIN number">
+</div>
+
+<!-- Option 2 -->
+<div class="custom-checkbox-wrapper">
+  <input 
+    type="radio" 
+    name="taxOption" 
+    id="enrollmentOption" 
+    value="Enrollment" 
+    required 
+    data-input-id="enrollmentInput"
+  >
+  <label for="enrollmentOption">
+    <span class="custom-circle"></span>
+    Enrollment ID / UIN (Sell locally in your registered state)
+  </label>
+</div>
+
+<div id="enrollmentInput" class="tax-input" style="display: none;">
+  <label for="enrollmentId">Enter Enrollment ID / UIN:</label>
+  <input type="text" id="enrollmentId" name="enrollmentId" placeholder="Enter your Enrollment ID">
+</div>
+          </div>
+          
+          
+      </div>
+      
+
+    <div class="form-step" id="step3">
+      <h1>Bank Details</h1>
+      <div class="form-group">
+        <label for="accountName">Account Name</label>
+        <input type="text" id="accountName" name = "accountName" placeholder="Enter your account name" required>
+      </div>
+      <div class="form-group">
+        <label for="ifscCode">IFSC Code</label>
+        <input type="text" id="ifscCode" name = "ifscCode"placeholder="Enter your IFSC code" required>
+      </div>
+      <div class="form-group">
+        <label for="accountNumber">Account Number</label>
+        <input type="text" id="accountNumber" name = "accountNumber" placeholder="Enter your account number" required>
+      </div>
+    </div>
+
+    <div class="form-step" id="step4" name = "step4">
+      <h1>Finish</h1>
+      <p>You have successfully completed all the steps!</p>
+    </div>
+
+    <div class="buttons">
+      <button type="button" id="backBtn" name = "backBtn" class="back-btn">Back</button>
+      <button type="button" id="continueBtn" name="continueBtn" class="continue-btn">Continue</button>
+      <button type="submit" id="submitBtn" name = "submitBtn" class="submit-btn" style="display: none;">Submit</button>
+
+    </div>
+  </div>
+  <script>
+    // Get elements for steps, circles, lines, and buttons
+const steps = document.querySelectorAll('.form-step');
+const circles = document.querySelectorAll('.circle');
+const lines = document.querySelectorAll('.line');
+let currentStep = 0;
+
+const backButton = document.getElementById('backBtn');
+const continueButton = document.getElementById('continueBtn');
+const submitButton = document.getElementById('submitBtn');
+
+// Function to update the active step, circle, and line
+function updateSteps() {
+  // Toggle 'active' class on steps
+  steps.forEach((step, index) => {
+    step.classList.toggle('active', index === currentStep);
+  });
+
+  // Toggle 'active' class on circles
+  circles.forEach((circle, index) => {
+    circle.classList.toggle('active', index <= currentStep);
+  });
+
+  // Toggle 'active' class on lines
+  lines.forEach((line, index) => {
+    line.classList.toggle('active', index < currentStep);
+  });
+
+  // Hide/show buttons based on the current step
+  if (currentStep === steps.length - 1) {
+    continueButton.style.display = 'none'; 
+    submitButton.style.display = 'inline-block'; 
+  } else {
+    continueButton.style.display = 'inline-block'; 
+    submitButton.style.display = 'none';
+  }
+}
+
+// Function to validate current step fields
+function validateStep() {
+  const currentFormStep = steps[currentStep];
+  const requiredInputs = currentFormStep.querySelectorAll('input[required]');
+  let isValid = true;
+
+  // Check if all required inputs are filled
+  requiredInputs.forEach(input => {
+    if (!input.value) {
+      input.style.borderColor = "red";
+      isValid = false;
+    } else {
+      input.style.borderColor = "#ccc";
+    }
+  });
+
+  // Additional validation for specific fields like email and mobile
+  const emailInput = document.getElementById('email');
+  const mobileInput = document.getElementById('mobile');
+  const accountNameInput = document.getElementById('accountName');
+  const accountNumberInput = document.getElementById('accountNumber');
+  const ifscCodeInput = document.getElementById('ifscCode');
+  
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  const mobileRegex = /^[0-9]{10}$/;
+
+  // Validate email format
+  if (emailInput && !emailRegex.test(emailInput.value)) {
+    emailInput.style.borderColor = "red";
+    isValid = false;
+  }
+
+  // Validate mobile format
+  if (mobileInput && !mobileRegex.test(mobileInput.value)) {
+    mobileInput.style.borderColor = "red";
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+// Function to validate password fields
+function validatePassword() {
+  const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirmpassword');
+  const passwordHelp = document.getElementById('passwordHelp');
+  const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+  // Password regex for validation
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
+  let isValid = true;
+
+  // Validate password format
+  if (!passwordRegex.test(passwordInput.value)) {
+    passwordInput.style.borderColor = "red";
+    passwordHelp.style.color = "red";
+    isValid = false;
+  } else {
+    passwordInput.style.borderColor = "#ccc";
+    passwordHelp.style.color = "gray";
+  }
+
+  // Check if passwords match
+  if (passwordInput.value !== confirmPasswordInput.value) {
+    confirmPasswordError.style.display = "block";
+    confirmPasswordInput.style.borderColor = "red";
+    isValid = false;
+  } else {
+    confirmPasswordError.style.display = "none";
+    confirmPasswordInput.style.borderColor = "#ccc";
+  }
+
+  return isValid;
+}
+
+// Event listener for the continue button
+continueButton.addEventListener('click', function () {
+  // First step requires password validation, we validate only if we are on step 1
+  if (currentStep === 0 && !validatePassword()) {
+    return; // Prevent navigation to next step if password validation fails
+  }
+
+  // Validate all required fields for the current step
+  if (validateStep()) {
+    currentStep++;
+    updateSteps();
+  }
+});
+
+// Event listener for the back button
+backButton.addEventListener('click', function () {
+  currentStep--;
+  updateSteps();
+});
+
+// Event listener for tax option radio buttons
+document.querySelectorAll('input[name="taxOption"]').forEach(option => {
+  option.addEventListener('change', function () {
+    // Hide all tax input fields
+    document.querySelectorAll('.tax-input').forEach(inputDiv => {
+      inputDiv.style.display = 'none';
+    });
+
+    // Display the selected input field
+    const selectedInputId = this.getAttribute('data-input-id');
+    if (selectedInputId) {
+      document.getElementById(selectedInputId).style.display = 'block';
+    }
+  });
+});
+
+
+
+
+
+// Initialize the steps on page load
+updateSteps();
+
+  </script>
+  </form>
+</body>
+</html>

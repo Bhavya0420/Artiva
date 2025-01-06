@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how to sell products on Artiva with our step-by-step guide, from registration to getting paid.">
+    <title>How to Sell on Artiva</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 26px;
+            color: #006c6c;
+            margin-bottom: 30px;
+        }
+
+        /* Steps container */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* Individual step styles */
+        .step {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .step img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .step h2 {
+            font-size: 18px;
+            color: #006c6c;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .register-button {
+            margin-top: 30px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 15px 30px;
+            color: white;
+            background-color: #006c6c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #004f4f;
+            transform: scale(1.1);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Link for existing sellers */
+        .login-link {
+            display: block;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #006c6c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: #004f4f;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .step h2 {
+                font-size: 16px;
+            }
+
+            .step p {
+                font-size: 12px;
+            }
+        }
+
+        /* Header styles */
+        header {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 1rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo a {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-family: 'Lobster', cursive;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin: 0 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center; /* Ensures vertical alignment of elements */
+            gap: 0; /* Removes unnecessary spacing */
+            background-color: white;
+            padding: 0.7rem;
+            border-radius: 8px;
+            width: 60%; /* Adjust as needed */
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            flex-grow: 1; /* Allows input to take up remaining space */
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-bar input::placeholder {
+            color: #888;
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #888;
+            box-shadow: none;
+            position: absolute; /* Absolute positioning to place the button */
+            right: 0rem; /* Adjust distance from the right edge */
+            transform: translateY(-50%); /* Centers the button vertically */
+            top: 50%; /* Vertical centering */
+            margin-left: auto;
+        }
+
+        .search-bar button:hover {
+            color: #2a9d8f;
+        }
+
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-icons a {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .header-icons a:hover {
+            color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="../HomePage.html">
+                <img src="../photos/logo.png" alt="Logo">
+            </a>
+            <a href="../HomePage.html">Artiva</a>
+        </div>
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products...">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="header-icons">
+            <a href="../Categories/wishlist.html"><i class="fas fa-heart"></i></a>
+            <a href="../Categories/cart.html"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>How to Sell Products on Artiva ?</h1>
+        <div class="steps">
+            <div class="step">
+                <img src="../photos/st1.png" alt="Register your account" loading="lazy">
+                <h2>STEP 1: Register your account</h2>
+                <p>Register on Artiva with GST/PAN details and an active bank account.</p>
+            </div>
+            <div class="step">
+                <img src="../photos/st2.png" alt="List your products" loading="lazy">
+                <h2>STEP 2: List your products</h2>
+                <p>List your products by providing product and brand details.</p>
+            </div>
+            <div class="step">
+                <img src="../photos/st3.png" alt="Choose storage and shipping options" loading="lazy">
+                <h2>STEP 3: Choose storage & shipping</h2>
+                <p>Choose storage, packaging, and delivery options.</p>
+            </div>
+            <div class="step">
+                <img src="../photos/st4.png" alt="Complete orders and get paid" loading="lazy">
+                <h2>STEP 4: Complete orders & get paid</h2>
+                <p>Deliver orders to customers on time and get paid within 7 days of delivery.</p>
+            </div>
+        </div>
+        <div class="register-button">
+            <a href="registration.html">
+                <button aria-label="Register on Artiva">Register</button>
+            </a>
+        </div>        
+        <a href="sellerLogin.html" class="login-link">Already a seller? Login here</a>
+    </div>
+</body>
+</html>

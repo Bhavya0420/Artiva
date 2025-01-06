@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Decor</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 1rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 1.8rem;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-family: 'Lobster', cursive;
+        }
+
+        .navbar-toggler {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: auto;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            font-size: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-icons i {
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .header-icons i:hover {
+            color: #ffffff;
+        }
+
+        .filter-sort {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-sort select {
+            padding: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            padding: 2rem;
+        }
+
+        /* Center the search bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            padding: 0.3rem;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 500px;
+        }
+
+        .search-bar input {
+            padding: 0.3rem;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: #555;
+            width: 250px;
+        }
+
+        .search-bar input::placeholder {
+            color: #888;
+        }
+
+        /* Style the search button */
+        .search-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #888;
+            font-size: 1.2rem;
+            margin-left: auto; 
+        }
+
+        .search-button:hover {
+            color: #2a9d8f; /* Change color on hover */
+        }
+
+        .item-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            margin: 1rem auto;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+            width: 100%; /* Stretch the product card horizontally */
+            max-width: 100%; /* Ensure it stretches fully */
+            box-sizing: border-box; /* Prevent overflow due to padding */
+            transition: transform 0.3s ease-in-out; /* Added transition for smooth zoom effect */
+        }
+        .item-container:hover {
+            transform: scale(1.02); /* Zoom effect on hover */
+        }
+
+        .zoom-effect {
+            overflow: hidden;
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .zoom-effect img {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+            border-radius: 8px;
+        }
+
+        .zoom-effect:hover img {
+            transform: scale(1.1);
+        }
+
+        .wishlist {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #aaa;
+            transition: transform 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .wishlist.filled {
+            color: #e63946;
+        }
+
+        .text {
+            max-width: 3300px;
+            flex: 1;
+            position: relative;
+            flex-grow: 1; /* Text section takes available space */
+            margin-left: 1.5rem;
+        }
+
+        .wishlist-description {
+            position: absolute;
+            top: 10px;
+            right: -5px;
+            font-size: 1.5rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .wishlist-description.filled {
+            color: #e63946;
+        }
+
+        .text h5 {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .text h4 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .text p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2a9d8f;
+            margin-bottom: 0.5rem;
+        }
+
+        .originalPrice {
+            text-decoration: line-through;
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .discount {
+            font-size: 1rem;
+            color: #e63946;
+            margin-left: 10px;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #2a9d8f;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #21867a;
+        }
+
+        .add-to-cart.added {
+            background-color: #21867a;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .item-container:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <a href="../HomePage.html"><img src="..\photos\logo.png" alt="Website Logo" class="logo-img"></a>
+            <a class="navbar-brand" href="../HomePage.html">Artiva</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            </button>
+
+            <div class="search-container">
+                <form class="search-bar" method="GET" action="../search.php">
+                    <!-- The name attribute 'q' matches the parameter checked in search.php -->
+                    <input type="text" name="q" placeholder="Search for products..." required>
+                    <button class="search-button" type="submit">
+                        <i class="fas fa-search"></i> <!-- Magnifying Glass Icon as button -->
+                    </button>
+                </form>
+            </div>
+            <div class="header-icons">
+                <a href="wishlist.html" style="text-decoration: none;">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a href="cart.html" style="text-decoration: none;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="filter-sort">
+        <select>
+            <option>Filter by Category</option>
+            <option>Show pieces</option>
+            <option>Flower vase</option>
+            <option>Wall shelves</option>
+            <option>Dolls</option>
+        </select> 
+        <select id="sortOptions">
+            <option value="none">Sort by</option>
+            <option value="lowToHigh">Price: Low to High</option>
+            <option value="highToLow">Price: High to Low</option>
+            <option value="newest">Newest Arrivals</option>
+        </select>
+    </div>
+
+    <section class="container" id="productList">
+        <!-- Product 1 -->
+        <div class="item-container" data-price="589" data-product-id="product7">
+            <div class="zoom-effect">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <img src="..\photos\hd1.jpg" alt="Home Decor">
+                </a>
+            </div>
+            <div class="text">
+                <h5>Dolls</h5>
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <h4>Adorable Penguin Figurines in Various Poses</h4>
+                </a>
+                <p>A set of six small, cute penguin figurines in various poses, each with unique accessories, arranged on a wooden surface</p>
+                <div class="price">₹589 <span class="originalPrice">₹1350</span> <span class="discount">56% OFF</span></div>
+                <button class="add-to-cart">Add to Cart</button>
+                <i class="fas fa-heart wishlist-description" data-product-id="product7"></i>
+            </div>
+        </div>
+    
+        <!-- Product 2 -->
+        <div class="item-container" data-price="399" data-product-id="product8">
+            <div class="zoom-effect">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <img src="..\photos\hd2.jpg" alt="Home Decor">
+                </a>
+            </div>
+            <div class="text">
+                <h5>Flower vase</h5>
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <h4>Golden Crescent Moon Planter</h4>
+                </a>
+                <p>A decorative plant holder shaped like a crescent moon, featuring a small green plant in a spherical pot, adding a touch of elegance and charm to any space</p>
+                <div class="price">₹399 <span class="originalPrice">₹499</span> <span class="discount">20% OFF</span></div>
+                <button class="add-to-cart">Add to Cart</button>
+                <i class="fas fa-heart wishlist-description" data-product-id="product8"></i>
+            </div>
+        </div>
+    
+        <!-- Product 3 -->
+        <div class="item-container" data-price="749" data-product-id="product9">
+            <div class="zoom-effect">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <img src="..\photos\hd3.jpg" alt="Home Decor">
+                </a>
+            </div>
+            <div class="text">
+                <h5>Show pieces</h5>
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <h4>Four Little Monk Figurines</h4>
+                </a>
+                <p>Four small monk figurines in vibrant robes, each depicting "See No Evil, Hear No Evil, Speak No Evil," exuding peace and mindfulness</p>
+                <div class="price">₹749 <span class="originalPrice">₹845</span> <span class="discount">11% OFF</span></div>
+                <button class="add-to-cart">Add to Cart</button>
+                <i class="fas fa-heart wishlist-description" data-product-id="product9"></i>
+            </div>
+        </div>
+    
+        <!-- Product 4 -->
+        <div class="item-container" data-price="459" data-product-id="product10">
+            <div class="zoom-effect">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <img src="..\photos\hd4.jpg" alt="Home Decor">
+                </a>
+            </div>
+            <div class="text">
+                <h5>Flower vase</h5>
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <h4>Minimalist Decor with Wooden Vase and White Flowers</h4>
+                </a>
+                <p>A minimalist scene featuring a unique wooden vase with a circular design, holding white flowers</p>
+                <div class="price">₹459 <span class="originalPrice">₹499</span> <span class="discount">8% OFF</span></div>
+                <button class="add-to-cart">Add to Cart</button>
+                <i class="fas fa-heart wishlist-description" data-product-id="product10"></i>
+            </div>
+        </div>
+    
+        <!-- Product 5 -->
+        <div class="item-container" data-price="679" data-product-id="product11">
+            <div class="zoom-effect">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <img src="..\photos\hd5.jpg" alt="Home Decor">
+                </a>
+            </div>
+            <div class="text">
+                <h5>Show pieces</h5>
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <h4>Moon Lamp with Wooden Stand</h4>
+                </a>
+                <p>A glowing moon lamp sits on a wooden stand, accompanied by a potted plant, creating a cozy and serene ambiance</p>
+                <div class="price">₹679 <span class="originalPrice">₹999</span> <span class="discount">32% OFF</span></div>
+                <button class="add-to-cart">Add to Cart</button>
+                <i class="fas fa-heart wishlist-description" data-product-id="product11"></i>
+            </div>
+        </div>
+    
+        <!-- Product 6 -->
+        <div class="item-container" data-price="529" data-product-id="product12">
+            <div class="zoom-effect">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <img src="..\photos\hd6.jpg" alt="Home Decor">
+                </a>
+            </div>
+            <div class="text">
+                <h5>Wall shelves</h5>
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <h4>Modern Wall-Mounted Shelves with Potted Plants</h4>
+                </a>
+                <p>A set of four wall-mounted shelves arranged in a diamond pattern, each holding a small potted plant in colorful pots</p>
+                <div class="price">₹529 <span class="originalPrice">₹749</span> <span class="discount">29% OFF</span></div>
+                <button class="add-to-cart">Add to Cart</button>
+                <i class="fas fa-heart wishlist-description" data-product-id="product12"></i>
+            </div>
+        </div>
+    </section>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wishlist functionality
+            const wishlistIcons = document.querySelectorAll('.wishlist-description');
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+            wishlistIcons.forEach(icon => {
+                const productId = icon.dataset.productId;
+                if (wishlist.includes(productId)) {
+                    icon.classList.add('filled');
+                }
+
+                icon.addEventListener('click', () => {
+                    const productId = icon.dataset.productId;
+
+                    if (wishlist.includes(productId)) {
+                        wishlist = wishlist.filter(id => id !== productId);
+                        icon.classList.remove('filled');
+                    } else {
+                        wishlist.push(productId);
+                        icon.classList.add('filled');
+                    }
+
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                });
+            });
+
+            // Add to Cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (button.classList.contains('added')) {
+                        // Remove from cart state
+                        button.classList.remove('added');
+                        button.innerHTML = 'Add to Cart';
+                    } else {
+                        // Add to cart state
+                        button.classList.add('added');
+                        button.innerHTML = '<i class="fas fa-check"></i> Added';
+                    }
+                });
+            });
+        });
+
+        document.getElementById('sortOptions').addEventListener('change', function () {
+            const productList = document.getElementById('productList');
+            const products = Array.from(productList.querySelectorAll('.item-container'));
+
+            if (this.value === 'lowToHigh') {
+                products.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+            } else if (this.value === 'highToLow') {
+                products.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+            }
+
+            productList.innerHTML = '';
+            products.forEach(product => productList.appendChild(product));
+        });
+
+        // Filter functionality
+        document.querySelector('.filter-sort select').addEventListener('change', function () {
+            const selectedCategory = this.value.toLowerCase();
+            const products = document.querySelectorAll('.item-container');
+
+            products.forEach(product => {
+                const productCategory = product.querySelector('h5').textContent.toLowerCase();
+
+                if (selectedCategory === 'filter by category' || productCategory === selectedCategory) {
+                    product.style.display = '';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wishlist functionality
+            const wishlistIcons = document.querySelectorAll('.wishlist-description');
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+            wishlistIcons.forEach(icon => {
+                const productId = icon.dataset.productId;
+                if (wishlist.includes(productId)) {
+                    icon.classList.add('filled');
+                }
+
+                icon.addEventListener('click', () => {
+                    const productId = icon.dataset.productId;
+
+                    if (wishlist.includes(productId)) {
+                        wishlist = wishlist.filter(id => id !== productId);
+                        icon.classList.remove('filled');
+                    } else {
+                        wishlist.push(productId);
+                        icon.classList.add('filled');
+                    }
+
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                });
+            });
+
+            // Add to Cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (button.classList.contains('added')) {
+                        // Remove from cart state
+                        button.classList.remove('added');
+                        button.innerHTML = 'Add to Cart';
+                    } else {
+                        // Add to cart state
+                        button.classList.add('added');
+                        button.innerHTML = '<i class="fas fa-check"></i> Added';
+                    }
+                });
+            });
+        });
+
+        document.getElementById('sortOptions').addEventListener('change', function () {
+            const productList = document.getElementById('productList');
+            const products = Array.from(productList.querySelectorAll('.item-container'));
+
+            if (this.value === 'lowToHigh') {
+                products.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+            } else if (this.value === 'highToLow') {
+                products.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+            }
+
+            productList.innerHTML = '';
+            products.forEach(product => productList.appendChild(product));
+        });
+
+        // Filter functionality
+        document.querySelector('.filter-sort select').addEventListener('change', function () {
+            const selectedCategory = this.value.toLowerCase();
+            const products = document.querySelectorAll('.item-container');
+
+            products.forEach(product => {
+                const productCategory = product.querySelector('h5').textContent.toLowerCase();
+
+                if (selectedCategory === 'filter by category' || productCategory === selectedCategory) {
+                    product.style.display = '';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productElement = e.target.closest('.item-container');
+                    const productId = productElement.getAttribute('data-product-id');
+                    const productName = productElement.querySelector('h4').textContent;
+                    const productPrice = parseFloat(productElement.getAttribute('data-price'));
+                    const productImage = productElement.querySelector('img').src;
+    
+                    // Retrieve the cart from localStorage or initialize an empty array
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+                    // Check if the product is already in the cart
+                    const existingProduct = cart.find(item => item.id === productId);
+    
+                    if (existingProduct) {
+                        // If product is already in cart, increase quantity
+                        existingProduct.quantity++;
+                    } else {
+                        // If product is not in cart, add it
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: 1
+                        });
+                    }
+    
+                    // Save the updated cart to localStorage
+                    localStorage.setItem('cart', JSON.stringify(cart));
+    
+                    // Change button to indicate item has been added
+                    e.target.innerHTML = '<i class="fas fa-check"></i> Added';
+                    e.target.classList.add('added');
+                });
+            });
+        });
+        const wishlistButtons = document.querySelectorAll('.wishlist-description');
+
+        document.addEventListener('DOMContentLoaded', () => {
+    // Wishlist functionality
+    const wishlistButtons = document.querySelectorAll('.wishlist-description');  // Ensure this is properly selected
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    wishlistButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productElement = e.target.closest('.item-container');
+            const productId = productElement.getAttribute('data-product-id');
+            const productName = productElement.querySelector('h4').textContent;
+            const productPrice = parseFloat(productElement.getAttribute('data-price'));
+            const productImage = productElement.querySelector('img').src;
+
+            // Check if the product is already in the wishlist
+            const existingWishlistItem = wishlist.find(item => item.id === productId);
+
+            if (existingWishlistItem) {
+                // If product is already in wishlist, show an alert or do nothing
+                alert("This product is already in your wishlist.");
+            } else {
+                // If product is not in wishlist, add it
+                wishlist.push({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    image: productImage
+                });
+
+                // Save the updated wishlist to localStorage
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+                // Change the icon to indicate the item has been added
+                e.target.classList.add('filled'); // Add 'filled' class to indicate it's in the wishlist
+                e.target.innerHTML = '<i class="fas fa-heart"></i> Added'; // Change the button text
+            }
+        });
+    });
+});
+
+    </script>
+
+</body>
+</html>
