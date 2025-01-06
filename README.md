@@ -105,7 +105,7 @@ Contributions are welcome! If you’d like to improve the project, feel free to:
 
 ## Contact
 For any queries or suggestions, please reach out to:
-- **Name**: Bhavya0420
+- **Name**: Bhavya Sree Manam
 - **Email**: [bhavyasreemanam4@gmail.com]
 - **GitHub**: [Bhavya0420](https://github.com/Bhavya0420)
 
