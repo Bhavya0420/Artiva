@@ -74,7 +74,7 @@ Bhavya0420-Artiva/
 ---
 
 ## Technologies Used
-- **Frontend**: HTML, CSS
+- **Frontend**: HTML, CSS, JavaScript
 - **Backend**: PHP
 - **Database**: MySQL (Setup instructions for database will be provided in a future update)
 - **Server**: Apache (via XAMPP, WAMP, or similar tools)
@@ -106,6 +106,6 @@ Contributions are welcome! If you’d like to improve the project, feel free to:
 ## Contact
 For any queries or suggestions, please reach out to:
 - **Name**: Bhavya0420
-- **Email**: [YourEmail@example.com]
+- **Email**: [bhavyasreemanam4@gmail.com]
 - **GitHub**: [Bhavya0420](https://github.com/Bhavya0420)
 
